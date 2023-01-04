@@ -48,7 +48,7 @@ function App() {
     const shuffledArray = allAnswers.sort((a, b) => 0.5 - Math.random());
     
     setAnswers(shuffledArray)
-  }, [questionNumber])
+  }, [questionNumber, questions.data])
 
   const restartGame = () => {
     setTimeout(() => {
