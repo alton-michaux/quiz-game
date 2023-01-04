@@ -19,7 +19,6 @@ function App() {
   }
 
   const handleAnswerClick = (isCorrect) => {
-    console.log('length', Questions.length, 'number', questionNumber, 'correct?', isCorrect)
     if (isCorrect) {
       setScore(score + 1)
     }
