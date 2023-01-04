@@ -59,11 +59,11 @@ function App() {
     const allAnswers = Questions.data[questionNumber].incorrect_answers
     if (allAnswers.length < 4) {
       allAnswers.push(Questions.data[questionNumber].correct_answer)
-      setAnswers(allAnswers)
     }
     if (allAnswers.length > 4) {
-      setAnswers(allAnswers.slice(0, 4))
+      allAnswers.slice(0, 4)
     }
+    setAnswers(allAnswers)
   }, [questionNumber])
 
   const restartGame = () => {
@@ -110,7 +110,6 @@ function App() {
                   <ul>
                     {
                       answers.map((option, index) => {
-                        console.log(answers)
                         return (
                           <Answers
                             key={index}
