@@ -5,8 +5,9 @@
   background-image: url('https://external-preview.redd.it/Z-mdOCdgw53wluJKQdklW2-WwJEcd3zXoER3YNl-euI.jpg?auto=webp&s=9da2a0406734c547c7bc489c5fa20b091c7ee86c');
   background-attachment: fixed;
   background-position: center;
-  background-size: 100vw 100vh;
+  background-size: 50vw 50vw;
   min-height: 100vh;
+  background-repeat: repeat;
 }
 
 .header {
