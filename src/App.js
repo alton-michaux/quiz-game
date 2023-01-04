@@ -57,23 +57,27 @@ function App() {
 
   useEffect(() => {
     const allAnswers = Questions.data[questionNumber].incorrect_answers
+    
     if (allAnswers.length < 4) {
       allAnswers.push(Questions.data[questionNumber].correct_answer)
     }
+    
     if (allAnswers.length > 4) {
       allAnswers.slice(0, 4)
     }
+    
     const shuffledArray = allAnswers.sort((a, b) => 0.5 - Math.random());
+    
     setAnswers(shuffledArray)
   }, [questionNumber])
 
   const restartGame = () => {
-      setTimeout(() => {
-        fetchQuestions();
-        setQuestionNumber(0)
-        setScore(0)
-        setShowResults(false)
-      }, 3000)
+    setTimeout(() => {
+      fetchQuestions();
+      setQuestionNumber(0)
+      setScore(0)
+      setShowResults(false)
+    }, 3000)
   }
 
   const handleAnswerClick = (isCorrect) => {
