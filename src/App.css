@@ -36,6 +36,11 @@
   background-color: blanchedalmond;
 }
 
+.answer:hover {
+  border: 2px solid black;
+  cursor: pointer;
+}
+
 ul {
   list-style: none;
 }

@@ -35,7 +35,7 @@ function App() {
               </div>
             ) : (
               <div className='card-body'>
-                <h3 className='question'>Question {questionNumber + 1} out of 5</h3>
+                <h3 className='question'>Question {questionNumber + 1} out of {questions.length}</h3>
                 <h5 className='card-title card-text'>{questions[questionNumber].question}</h5>
                 <ul>
                   {questions[questionNumber].options.map((option) => {
