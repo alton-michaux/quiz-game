@@ -7,7 +7,6 @@ const QuestionReducer = (state, action) => {
 				isError: false,
 			};
 		case 'QUESTION_FETCH_SUCCESS':
-			console.log('state', state, 'payload', action.payload)
 			return {
 				...state,
 				isLoading: false,
