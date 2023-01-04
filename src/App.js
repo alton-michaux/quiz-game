@@ -39,6 +39,7 @@ function App() {
   const [showResults, setShowResults] = useState(false)
   const [questions, dispatchQuestions] = useReducer(QuestionReducer,
     { data: [], isError: false, isLoading: false })
+  const [answers, setAnswers] = useState([])
 
   const fetchQuestions = async () => {
     try {
@@ -55,10 +56,13 @@ function App() {
   }
 
   useEffect(() => {
-    // console.log('number changed', questionNumber + 1, 'total questions', Questions.data.length)
-    const allAnswers = Questions.data[questionNumber].incorrect_answers.push(Questions.data[questionNumber].correct_answer)
+    const allAnswers = Questions.data[questionNumber].incorrect_answers
+    if (allAnswers.length < 4) {
+      allAnswers.push(Questions.data[questionNumber].correct_answer)
+      setAnswers(allAnswers)
+    }
     if (allAnswers.length > 4) {
-      allAnswers.pop(-1)
+      setAnswers(allAnswers.slice(0, 4))
     }
   }, [questionNumber])
 
@@ -105,7 +109,8 @@ function App() {
                   <h5 className='card-title card-text'>{Questions.data[questionNumber].question}</h5>
                   <ul>
                     {
-                      Questions.data[questionNumber].incorrect_answers.map((option, index) => {
+                      answers.map((option, index) => {
+                        console.log(answers)
                         return (
                           <Answers
                             key={index}
