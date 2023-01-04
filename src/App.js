@@ -1,45 +1,16 @@
 import { useState, useEffect, useReducer } from 'react'
 import Answers from './Answers.js'
 import Questions from './Questions.js'
+import QuestionReducer from './Reducers.js'
 import './App.css';
-
-const QuestionReducer = (state, action) => {
-  switch (action.type) {
-    case 'QUESTION_FETCH_INIT':
-      return {
-        ...state,
-        isLoading: true,
-        isError: false,
-      };
-    case 'QUESTION_FETCH_SUCCESS':
-      return {
-        ...state,
-        isLoading: false,
-        isError: false,
-        data: action.payload,
-      };
-    case 'QUESTION_FETCH_FAIL':
-      return {
-        ...state,
-        isLoading: false,
-        isError: true,
-      };
-    default:
-      return {
-        ...state,
-        isLoading: false,
-        isError: false,
-      };
-  }
-}
 
 function App() {
   const [score, setScore] = useState(0)
   const [questionNumber, setQuestionNumber] = useState(0)
   const [showResults, setShowResults] = useState(false)
+  const [answers, setAnswers] = useState([])
   const [questions, dispatchQuestions] = useReducer(QuestionReducer,
     { data: [], isError: false, isLoading: false })
-  const [answers, setAnswers] = useState([])
 
   const fetchQuestions = async () => {
     try {
@@ -56,10 +27,17 @@ function App() {
   }
 
   useEffect(() => {
-    const allAnswers = Questions.data[questionNumber].incorrect_answers
+    setTimeout(() => {
+      fetchQuestions();
+    }, 3000)
+  }, [])
+
+  // console.log('questions', questions)
+  useEffect(() => {
+    const allAnswers = questions.data[questionNumber].incorrect_answers
     
     if (allAnswers.length < 4) {
-      allAnswers.push(Questions.data[questionNumber].correct_answer)
+      allAnswers.push(questions.data[questionNumber].correct_answer)
     }
     
     if (allAnswers.length > 4) {
@@ -84,7 +62,7 @@ function App() {
     if (isCorrect) {
       setScore(score + 1)
     }
-    if (questionNumber + 1 === Questions.data.length) {
+    if (questionNumber + 1 === questions.data.length) {
       setShowResults(true)
     } else {
       setQuestionNumber(questionNumber + 1)
@@ -106,12 +84,12 @@ function App() {
             {
               showResults ? (
                 <div className='card-body results'>
-                  <h3 className='question'>You got {score} out of {Questions.data.length} answers correct</h3>
+                  <h3 className='question'>You got {score} out of {questions.data.length} answers correct</h3>
                 </div>
               ) : (
                 <div className='card-body'>
-                  <h3 className='question'>Question {questionNumber + 1} out of {Questions.data.length}</h3>
-                  <h5 className='card-title card-text'>{Questions.data[questionNumber].question}</h5>
+                  <h3 className='question'>Question {questionNumber + 1} out of {questions.data.length}</h3>
+                  <h5 className='card-title card-text'>{questions.data[questionNumber].question}</h5>
                   <ul>
                     {
                       answers.map((option, index) => {
@@ -120,7 +98,7 @@ function App() {
                             key={index}
                             answer={option}
                             onSubmit={handleAnswerClick}
-                            correct={Questions.data[questionNumber].correct_answer}
+                            correct={questions.data[questionNumber].correct_answer}
                           ></Answers>
                         )
                       })
