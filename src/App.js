@@ -34,6 +34,7 @@ function App() {
 
   // console.log('questions', questions)
   useEffect(() => {
+    console.log('current position:', questionNumber, 'current question text:', questions.data[questionNumber])
     const allAnswers = questions.data[questionNumber].incorrect_answers
     
     if (allAnswers.length < 4) {
