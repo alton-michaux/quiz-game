@@ -9,7 +9,6 @@ function App() {
   const [questionNumber, setQuestionNumber] = useState(0)
   const [showResults, setShowResults] = useState(false)
   const [answers, setAnswers] = useState([])
-  const [question, setQuestion] = useState([])
   const [questions, dispatchQuestions] = useReducer(QuestionReducer,
     { data: [], isError: false, isLoading: false })
 
@@ -35,9 +34,7 @@ function App() {
 
   // console.log('questions', questions)
   useEffect(() => {
-    const formattedQuestion = questions.data[questionNumber].question.replace(/[(&quot;)]/g, '\"')
-    // console.log('current question:', formattedQuestion)
-    setQuestion(formattedQuestion)
+    console.log('current position:', questionNumber, 'current question text:', questions.data[questionNumber])
     const allAnswers = questions.data[questionNumber].incorrect_answers
     
     if (allAnswers.length < 4) {
@@ -94,7 +91,7 @@ function App() {
               ) : (
                 <div className='card-body'>
                   <h3 className='question'>Question {questionNumber + 1} out of {questions.data.length}</h3>
-                  <h5 className='card-title card-text'>{question}</h5>
+                  <h5 className='card-title card-text'>{questions.data[questionNumber].question.replace(/&quot;/g, '\\"')}</h5>
                   <ul>
                     {
                       answers.map((option, index) => {
