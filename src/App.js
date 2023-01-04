@@ -33,7 +33,7 @@ function App() {
     if (isCorrect) {
       setScore(score + 1)
     }
-    if (questionNumber + 1 === questions.length) {
+    if (questionNumber + 1 === Questions.length) {
       setShowResults(true)
     } else {
       setQuestionNumber(questionNumber + 1)
@@ -58,20 +58,21 @@ function App() {
             {
               showResults ? (
                 <div className='card-body results'>
-                  <h3 className='question'>You got {score} out of {questions.length} answers correct</h3>
+                  <h3 className='question'>You got {score} out of {Questions.length} answers correct</h3>
                 </div>
               ) : (
                 <div className='card-body'>
-                  <h3 className='question'>Question {questionNumber + 1} out of {questions.length}</h3>
-                  <h5 className='card-title card-text'>{questions[questionNumber].question}</h5>
+                  <h3 className='question'>Question {questionNumber + 1} out of {Questions.length}</h3>
+                  <h5 className='card-title card-text'>{Questions[questionNumber].question}</h5>
                   {/* { questions[questionNumber].incorrect_answers << questions[questionNumber].correct_answer } */}
                   <ul>
                     {
-                      questions[questionNumber].incorrect_answers.map((option, index) => {
+                      Questions[questionNumber].incorrect_answers.map((option, index) => {
                         return (
                           <Answers
-                            key={index}
-                            answer={option}
+                            key={option.id}
+                            answer={option.text}
+                            isCorrect={option.isCorrect}
                             onSubmit={handleAnswerClick}
                           ></Answers>
                         )
