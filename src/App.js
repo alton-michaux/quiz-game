@@ -7,9 +7,20 @@ function App() {
   const [score, setScore] = useState(0)
   const [questionNumber, setQuestionNumber] = useState(0)
   const [showResults, setShowResults] = useState(false)
+  const [questions, setQuestions] = useState([])
+
+  const fetchQuestions = async () => {
+    const response = await fetch('https://opentdb.com/api.php?amount=10&category=23&difficulty=easy&type=multiple')
+
+    const data = await response.json()
+
+    const questionWrapper = [data.results]
+
+    setQuestions(questionWrapper)
+  }
 
   useEffect(() => {
-
+    fetchQuestions();
   }, [])
 
   const restartGame = () => {
@@ -22,12 +33,17 @@ function App() {
     if (isCorrect) {
       setScore(score + 1)
     }
-    if (questionNumber + 1 === Questions.length) {
+    if (questionNumber + 1 === questions.length) {
       setShowResults(true)
     } else {
       setQuestionNumber(questionNumber + 1)
     }
   }
+
+  // if (questions.length === 0) {
+  //   setQuestions(Questions)
+  //   console.log(questions)
+  // }
 
   return (
     <div className="App">
@@ -42,23 +58,25 @@ function App() {
             {
               showResults ? (
                 <div className='card-body results'>
-                  <h3 className='question'>You got {score} out of {Questions.length} answers correct</h3>
+                  <h3 className='question'>You got {score} out of {questions.length} answers correct</h3>
                 </div>
               ) : (
                 <div className='card-body'>
-                  <h3 className='question'>Question {questionNumber + 1} out of {Questions.length}</h3>
-                  <h5 className='card-title card-text'>{Questions[questionNumber].question}</h5>
+                  <h3 className='question'>Question {questionNumber + 1} out of {questions.length}</h3>
+                  <h5 className='card-title card-text'>{questions[questionNumber].question}</h5>
+                  {/* { questions[questionNumber].incorrect_answers << questions[questionNumber].correct_answer } */}
                   <ul>
-                    {Questions[questionNumber].options.map((option) => {
-                      return (
-                        <Answers
-                          key={option.id}
-                          answer={option.text}
-                          isCorrect={option.isCorrect}
-                          onSubmit={handleAnswerClick}
-                        ></Answers>
-                      )
-                    })}
+                    {
+                      questions[questionNumber].incorrect_answers.map((option, index) => {
+                        return (
+                          <Answers
+                            key={index}
+                            answer={option}
+                            onSubmit={handleAnswerClick}
+                          ></Answers>
+                        )
+                      })
+                    }
                   </ul>
                 </div>
               )
