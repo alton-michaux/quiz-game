@@ -47,46 +47,40 @@ function App() {
       const response = await fetch('https://opentdb.com/api.php?amount=10&category=23&difficulty=easy&type=multiple')
 
       const data = await response.json()
-console.log(data.results)
-      return dispatchQuestions({ type: 'QUESTION_FETCH_SUCCESS', payload: data.results })
+
+      return dispatchQuestions({ type: 'QUESTION_FETCH_SUCCESS', payload: [...data.results] })
     } catch (error) {
-      // setIsError(true)
       return dispatchQuestions({ type: 'QUESTION_FETCH_FAIL' })
     }
   }
 
   useEffect(() => {
-    // setIsLoading(true)
-
-    setTimeout(() => {
-      fetchQuestions();
-      console.log('questions', questions.data)
-    }, 3000)
-
-    // setIsLoading(false)
-  }, [])
+    // console.log('number changed', questionNumber + 1, 'total questions', Questions.data.length)
+    const allAnswers = Questions.data[questionNumber].incorrect_answers.push(Questions.data[questionNumber].correct_answer)
+    if (allAnswers.length > 4) {
+      allAnswers.pop(-1)
+    }
+  }, [questionNumber])
 
   const restartGame = () => {
-    setQuestionNumber(0)
-    setScore(0)
-    setShowResults(false)
+      setTimeout(() => {
+        fetchQuestions();
+        setQuestionNumber(0)
+        setScore(0)
+        setShowResults(false)
+      }, 3000)
   }
 
   const handleAnswerClick = (isCorrect) => {
     if (isCorrect) {
       setScore(score + 1)
     }
-    if (questionNumber + 1 === Questions.length) {
+    if (questionNumber + 1 === Questions.data.length) {
       setShowResults(true)
     } else {
       setQuestionNumber(questionNumber + 1)
     }
   }
-
-  // if (questions.length === 0) {
-  //   setQuestions(Questions)
-  //   console.log(questions)
-  // }
 
   return (
     <div className="App">
@@ -103,22 +97,21 @@ console.log(data.results)
             {
               showResults ? (
                 <div className='card-body results'>
-                  <h3 className='question'>You got {score} out of {Questions.length} answers correct</h3>
+                  <h3 className='question'>You got {score} out of {Questions.data.length} answers correct</h3>
                 </div>
               ) : (
                 <div className='card-body'>
-                  <h3 className='question'>Question {questionNumber + 1} out of {Questions.length}</h3>
-                  <h5 className='card-title card-text'>{Questions[questionNumber].question}</h5>
-                  {/* { questions[questionNumber].incorrect_answers << questions[questionNumber].correct_answer } */}
+                  <h3 className='question'>Question {questionNumber + 1} out of {Questions.data.length}</h3>
+                  <h5 className='card-title card-text'>{Questions.data[questionNumber].question}</h5>
                   <ul>
                     {
-                      Questions[questionNumber].incorrect_answers.map((option, index) => {
+                      Questions.data[questionNumber].incorrect_answers.map((option, index) => {
                         return (
                           <Answers
-                            key={option.id}
-                            answer={option.text}
-                            isCorrect={option.isCorrect}
+                            key={index}
+                            answer={option}
                             onSubmit={handleAnswerClick}
+                            correct={Questions.data[questionNumber].correct_answer}
                           ></Answers>
                         )
                       })
@@ -130,7 +123,7 @@ console.log(data.results)
             <button
               type='button'
               onClick={() => { restartGame() }}
-            >Restart
+            >New Game
             </button>
           </>
         </div>

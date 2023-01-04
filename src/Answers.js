@@ -1,6 +1,10 @@
-const Answers = function ({ id, answer, isCorrect, onSubmit }) {
+const Answers = function ({ id, answer, correct, onSubmit }) {
 	const handleAnswerSubmissions = () => {
-		onSubmit(isCorrect)
+		if (answer === correct) {
+			onSubmit(true)
+		} else {
+			onSubmit(false)
+		}
 	}
 	return (
 		<li
