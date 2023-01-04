@@ -16,7 +16,7 @@ function App() {
     try {
       dispatchQuestions({ type: 'QUESTION_FETCH_INIT' })
 
-      const response = await fetch('https://opentdb.com/api.php?amount=15&category=11')
+      const response = await fetch('https://opentdb.com/api.php?amount=10&category=23&difficulty=easy&type=multiple')
 
       const data = await response.json()
 
@@ -34,11 +34,10 @@ function App() {
 
   // console.log('questions', questions)
   useEffect(() => {
-    console.log('current position:', questionNumber, 'current question text:', questions.data[questionNumber])
-    const allAnswers = questions.data[questionNumber].incorrect_answers
+    const allAnswers = Questions.data[questionNumber].incorrect_answers
     
     if (allAnswers.length < 4) {
-      allAnswers.push(questions.data[questionNumber].correct_answer)
+      allAnswers.push(Questions.data[questionNumber].correct_answer)
     }
     
     if (allAnswers.length > 4) {
@@ -48,7 +47,7 @@ function App() {
     const shuffledArray = allAnswers.sort((a, b) => 0.5 - Math.random());
     
     setAnswers(shuffledArray)
-  }, [questionNumber, questions.data])
+  }, [questionNumber])
 
   const restartGame = () => {
     setTimeout(() => {
@@ -61,10 +60,9 @@ function App() {
 
   const handleAnswerClick = (isCorrect) => {
     if (isCorrect) {
-      console.log("correct")
       setScore(score + 1)
     }
-    if (questionNumber + 1 === questions.data.length) {
+    if (questionNumber + 1 === Questions.data.length) {
       setShowResults(true)
     } else {
       setQuestionNumber(questionNumber + 1)
@@ -74,7 +72,7 @@ function App() {
   return (
     <div className="App">
       {/* Header */}
-      <h1 className='display-5 header'>Movie Trivia</h1>
+      <h1 className='display-5 header'>Drunk History Trivia</h1>
       {/* Current Score */}
       <h5 className='score'>Current Score: {score}</h5>
       {/* Question Card/Results */}
@@ -86,12 +84,12 @@ function App() {
             {
               showResults ? (
                 <div className='card-body results'>
-                  <h3 className='question'>You got {score} out of {questions.data.length} answers correct</h3>
+                  <h3 className='question'>You got {score} out of {Questions.data.length} answers correct</h3>
                 </div>
               ) : (
                 <div className='card-body'>
-                  <h3 className='question'>Question {questionNumber + 1} out of {questions.data.length}</h3>
-                  <h5 className='card-title card-text'>{questions.data[questionNumber].question.replace(/&quot;/g, '\\"')}</h5>
+                  <h3 className='question'>Question {questionNumber + 1} out of {Questions.data.length}</h3>
+                  <h5 className='card-title card-text'>{Questions.data[questionNumber].question}</h5>
                   <ul>
                     {
                       answers.map((option, index) => {
@@ -100,7 +98,7 @@ function App() {
                             key={index}
                             answer={option}
                             onSubmit={handleAnswerClick}
-                            correct={questions.data[questionNumber].correct_answer}
+                            correct={Questions.data[questionNumber].correct_answer}
                           ></Answers>
                         )
                       })
