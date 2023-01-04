@@ -1,26 +1,57 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useReducer } from 'react'
 import Answers from './Answers.js'
 import Questions from './Questions.js'
 import './App.css';
+
+const QuestionReducer = (state, action) => {
+  switch (action.type) {
+    case 'QUESTION_FETCH_INIT':
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+      };
+    case 'QUESTION_FETCH_SUCCESS':
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        data: action.payload,
+      };
+    case 'QUESTION_FETCH_FAIL':
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+      };
+    default:
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+      };
+  }
+}
 
 function App() {
   const [score, setScore] = useState(0)
   const [questionNumber, setQuestionNumber] = useState(0)
   const [showResults, setShowResults] = useState(false)
-  const [questions, setQuestions] = useState([])
-  // const [isLoading, setIsLoading] = useState(false)
-  // const [isError, setIsError] = useState(false)
+  const [questions, dispatchQuestions] = useReducer(QuestionReducer,
+    { data: [], isError: false, isLoading: false })
 
   const fetchQuestions = async () => {
     try {
+      dispatchQuestions({ type: 'QUESTION_FETCH_INIT' })
+
       const response = await fetch('https://opentdb.com/api.php?amount=10&category=23&difficulty=easy&type=multiple')
-      
+
       const data = await response.json()
-      
-      return setQuestions([...data.results])
+console.log(data.results)
+      return dispatchQuestions({ type: 'QUESTION_FETCH_SUCCESS', payload: data.results })
     } catch (error) {
       // setIsError(true)
-      console.log(error)
+      return dispatchQuestions({ type: 'QUESTION_FETCH_FAIL' })
     }
   }
 
@@ -29,7 +60,7 @@ function App() {
 
     setTimeout(() => {
       fetchQuestions();
-      console.log('questions', questions)
+      console.log('questions', questions.data)
     }, 3000)
 
     // setIsLoading(false)
@@ -67,8 +98,8 @@ function App() {
       <div className='card'>
         <div className='card-body'>
           <>
-            {/* {isLoading && <p>Loading...</p>}
-            {isError && <p>Something went wrong...</p>} */}
+            {questions.isLoading && <p>Loading...</p>}
+            {questions.isError && <p>Something went wrong...</p>}
             {
               showResults ? (
                 <div className='card-body results'>
