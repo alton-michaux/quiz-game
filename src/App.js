@@ -99,7 +99,7 @@ function App() {
                             key={index}
                             answer={option}
                             onSubmit={handleAnswerClick}
-                            correct={Questions.data[questionNumber].correct_answer}
+                            correct={questions.data[questionNumber].correct_answer}
                           ></Answers>
                         )
                       })
