@@ -5,29 +5,31 @@
   background-image: url('https://external-preview.redd.it/Z-mdOCdgw53wluJKQdklW2-WwJEcd3zXoER3YNl-euI.jpg?auto=webp&s=9da2a0406734c547c7bc489c5fa20b091c7ee86c');
   background-attachment: fixed;
   background-position: center;
-  background-size: 50vw 50vw;
+  background-size: 25vw 25vw;
   min-height: 100vh;
   background-repeat: repeat;
+  overflow: hidden;
 }
 
 .header {
-  color: white;
-  background-color: black;
-  opacity: 90%;
+  color: black;
+  background-color: white;
+  opacity: 95%;
+  width: 50%;
+  margin: 0 auto;
 }
 
 .score {
-  color: white;
+  color: black;
   padding-bottom: 1%;
-  background-color: black;
-  opacity: 90%;
+  background-color: white;
+  opacity: 95%;
   width: 50%;
   margin: 0 auto;
 }
 
 .card {
   width: 80%;
-  max-height: 80%;
   margin: 0 auto;
   padding: 8px;
   border-radius: 16px;
@@ -36,12 +38,12 @@
 }
 
 .card-body {
-  background-color: rgb(188, 44, 22);
+  background-color: rgb(0, 0, 0);
 }
 
 .card-title {
   background-color: rgb(243, 237, 238);
-  padding: 8px;
+  padding: 4px;
   border-radius: 16px;
   border: 3px solid black;
   font-size: 24px;
@@ -49,6 +51,10 @@
 
 .card-text {
   padding: 40px;
+}
+
+.question {
+  color: white;
 }
 
 .answer {
