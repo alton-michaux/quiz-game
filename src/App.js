@@ -63,7 +63,8 @@ function App() {
     if (allAnswers.length > 4) {
       allAnswers.slice(0, 4)
     }
-    setAnswers(allAnswers)
+    const shuffledArray = allAnswers.sort((a, b) => 0.5 - Math.random());
+    setAnswers(shuffledArray)
   }, [questionNumber])
 
   const restartGame = () => {
