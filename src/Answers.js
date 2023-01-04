@@ -1,9 +1,12 @@
-const Answers = function ({ id, answer, isCorrect }) {
+const Answers = function ({ id, answer, isCorrect, onSubmit }) {
+	const handleAnswerSubmissions = () => {
+		onSubmit(isCorrect)
+	}
 	return (
 		<li
 			className='answer'
 			key={id}
-			iscorrect={isCorrect}
+			onClick={handleAnswerSubmissions}
 		>{answer}
 		</li>
 	)

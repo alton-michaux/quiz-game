@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Answers from './Answers.js'
+import Questions from './Questions.js'
 import './App.css';
 
 function App() {
@@ -7,17 +8,27 @@ function App() {
   const [questionNumber, setQuestionNumber] = useState(0)
   const [showResults, setShowResults] = useState(false)
 
-  const questions = [
-    {
-      question: 'Napoleon was once attacked by a horde of _____.',
-      options: [
-        { id: 1, text: 'Dogs', isCorrect: false },
-        { id: 2, text: 'Ferrets', isCorrect: false },
-        { id: 3, text: 'Rabbits', isCorrect: true },
-        { id: 4, text: 'Pigeons', isCorrect: false }
-      ]
+  useEffect(() => {
+
+  }, [])
+
+  const restartGame = () => {
+    setQuestionNumber(0)
+    setScore(0)
+    setShowResults(false)
+  }
+
+  const handleAnswerClick = (isCorrect) => {
+    console.log('length', Questions.length, 'number', questionNumber, 'correct?', isCorrect)
+    if (isCorrect) {
+      setScore(score + 1)
     }
-  ]
+    if (questionNumber + 1 === Questions.length) {
+      setShowResults(true)
+    } else {
+      setQuestionNumber(questionNumber + 1)
+    }
+  }
 
   return (
     <div className="App">
@@ -28,29 +39,37 @@ function App() {
       {/* Question Card/Results */}
       <div className='card'>
         <div className='card-body'>
-          {
-            showResults ? (
-              <div className='card-body results'>
-                <h3 className='question'>You got {score} out of 5 answers correct</h3>
-              </div>
-            ) : (
-              <div className='card-body'>
-                <h3 className='question'>Question {questionNumber + 1} out of {questions.length}</h3>
-                <h5 className='card-title card-text'>{questions[questionNumber].question}</h5>
-                <ul>
-                  {questions[questionNumber].options.map((option) => {
-                    return (
-                      <Answers
-                        key={option.id}
-                        answer={option.text}
-                        iscorrect={option.isCorrect}
-                      ></Answers>
-                    )
-                  })}
-                </ul>
-              </div>
-            )
-          }
+          <>
+            {
+              showResults ? (
+                <div className='card-body results'>
+                  <h3 className='question'>You got {score} out of {Questions.length} answers correct</h3>
+                </div>
+              ) : (
+                <div className='card-body'>
+                  <h3 className='question'>Question {questionNumber + 1} out of {Questions.length}</h3>
+                  <h5 className='card-title card-text'>{Questions[questionNumber].question}</h5>
+                  <ul>
+                    {Questions[questionNumber].options.map((option) => {
+                      return (
+                        <Answers
+                          key={option.id}
+                          answer={option.text}
+                          isCorrect={option.isCorrect}
+                          onSubmit={handleAnswerClick}
+                        ></Answers>
+                      )
+                    })}
+                  </ul>
+                </div>
+              )
+            }
+            <button
+              type='button'
+              onClick={() => { restartGame() }}
+            >Restart
+            </button>
+          </>
         </div>
       </div>
     </div>
