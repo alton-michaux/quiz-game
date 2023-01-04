@@ -13,7 +13,6 @@
 }
 
 .card-body {
-  border: 3px solid darkgray;
   background-color: burlywood;
 }
 
@@ -25,7 +24,11 @@
   font-size: 24px;
 }
 
-.answers {
+.card-text {
+  padding: 60px;
+}
+
+.answer {
   border: 1px solid white;
   margin-top: 1%;
   padding: 16px;

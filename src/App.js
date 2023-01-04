@@ -1,10 +1,23 @@
-import {useState} from 'react'
+import { useState } from 'react'
+import Answers from './Answers.js'
 import './App.css';
 
 function App() {
   const [score, setScore] = useState(0)
-  const [questionNumber, setQuestionNumber] = useState(1)
+  const [questionNumber, setQuestionNumber] = useState(0)
   const [showResults, setShowResults] = useState(false)
+
+  const questions = [
+    {
+      question: 'Napoleon was once attacked by a horde of _____.',
+      options: [
+        { id: 1, text: 'Dogs', isCorrect: false },
+        { id: 2, text: 'Ferrets', isCorrect: false },
+        { id: 3, text: 'Rabbits', isCorrect: true },
+        { id: 4, text: 'Pigeons', isCorrect: false }
+      ]
+    }
+  ]
 
   return (
     <div className="App">
@@ -15,21 +28,28 @@ function App() {
       {/* Question Card/Results */}
       <div className='card'>
         <div className='card-body'>
-          { showResults ? <>
-                <div className='card-body results'>
-                  <h3 className='question'>You got {score} out of 5 answers correct</h3>
-                  <h5 className='card-title card-text'></h5>
-                </div>
-              </> : <>
-                <h3 className='question'>Question {questionNumber} out of 5</h3>
-                <h5 className='card-title card-text'>Join the expedition as these intrepid explorers venture into the Western Frontier, as told by Georgia Hardstark and Alie Ward. Name the dynamic duo.</h5>
+          {
+            showResults ? (
+              <div className='card-body results'>
+                <h3 className='question'>You got {score} out of 5 answers correct</h3>
+              </div>
+            ) : (
+              <div className='card-body'>
+                <h3 className='question'>Question {questionNumber + 1} out of 5</h3>
+                <h5 className='card-title card-text'>{questions[questionNumber].question}</h5>
                 <ul>
-                  <li className='answers'>Butch Cassidy and the Sundance Kid</li>
-                  <li className='answers'>Starsky and Hutch</li>
-                  <li className='answers'>Lewis and Clark</li>
-                  <li className='answers'>Sherlock Holmes and Dr. Watson</li>
+                  {questions[questionNumber].options.map((option) => {
+                    return (
+                      <Answers
+                        key={option.id}
+                        answer={option.text}
+                        iscorrect={option.isCorrect}
+                      ></Answers>
+                    )
+                  })}
                 </ul>
-            </>
+              </div>
+            )
           }
         </div>
       </div>
