@@ -16,7 +16,7 @@ function App() {
     try {
       dispatchQuestions({ type: 'QUESTION_FETCH_INIT' })
 
-      const response = await fetch('https://opentdb.com/api.php?amount=10&category=23&difficulty=easy&type=multiple')
+      const response = await fetch('https://opentdb.com/api.php?amount=15&category=11')
 
       const data = await response.json()
 
@@ -61,6 +61,7 @@ function App() {
 
   const handleAnswerClick = (isCorrect) => {
     if (isCorrect) {
+      console.log("correct")
       setScore(score + 1)
     }
     if (questionNumber + 1 === questions.data.length) {
@@ -73,7 +74,7 @@ function App() {
   return (
     <div className="App">
       {/* Header */}
-      <h1 className='display-5 header'>Drunk History Trivia</h1>
+      <h1 className='display-5 header'>Movie Trivia</h1>
       {/* Current Score */}
       <h5 className='score'>Current Score: {score}</h5>
       {/* Question Card/Results */}

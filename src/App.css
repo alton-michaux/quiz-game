@@ -2,7 +2,7 @@
   text-align: center;
   display: flex;
   flex-direction: column;
-  background-image: url('https://wallpaperaccess.com/full/3570700.jpg');
+  background-image: url('https://external-preview.redd.it/Z-mdOCdgw53wluJKQdklW2-WwJEcd3zXoER3YNl-euI.jpg?auto=webp&s=9da2a0406734c547c7bc489c5fa20b091c7ee86c');
   background-attachment: fixed;
   background-position: center;
   background-size: 100vw 100vh;
@@ -11,28 +11,35 @@
 
 .header {
   color: white;
+  background-color: black;
+  opacity: 90%;
 }
 
 .score {
   color: white;
   padding-bottom: 1%;
+  background-color: black;
+  opacity: 90%;
+  width: 50%;
+  margin: 0 auto;
 }
 
 .card {
   width: 80%;
+  max-height: 80%;
   margin: 0 auto;
   padding: 8px;
   border-radius: 16px;
   bottom: 15px;
-  opacity: 80%;
+  opacity: 90%;
 }
 
 .card-body {
-  background-color: burlywood;
+  background-color: rgb(188, 44, 22);
 }
 
 .card-title {
-  background-color: blanchedalmond;
+  background-color: rgb(243, 237, 238);
   padding: 8px;
   border-radius: 16px;
   border: 3px solid black;
