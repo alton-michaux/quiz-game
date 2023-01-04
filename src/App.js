@@ -1,6 +1,6 @@
 import { useState, useEffect, useReducer } from 'react'
 import Answers from './Answers.js'
-import Questions from './Questions.js'
+// import Questions from './Questions.js'
 import QuestionReducer from './Reducers.js'
 import './App.css';
 
@@ -32,9 +32,7 @@ function App() {
     }, 3000)
   }, [])
 
-  // console.log('questions', questions)
   useEffect(() => {
-    console.log('current position:', questionNumber, 'current question text:', questions.data[questionNumber])
     const allAnswers = questions.data[questionNumber].incorrect_answers
     
     if (allAnswers.length < 4) {
@@ -61,7 +59,6 @@ function App() {
 
   const handleAnswerClick = (isCorrect) => {
     if (isCorrect) {
-      console.log("correct")
       setScore(score + 1)
     }
     if (questionNumber + 1 === questions.data.length) {
