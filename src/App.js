@@ -72,9 +72,9 @@ function App() {
   return (
     <div className="App">
       {/* Header */}
-      <h1 className='display-3 header'>Drunk History Trivia</h1>
+      <h1 className='display-5 header'>Drunk History Trivia</h1>
       {/* Current Score */}
-      <p className='score'>Current Score: {score}</p>
+      <h5 className='score'>Current Score: {score}</h5>
       {/* Question Card/Results */}
       <div className='card'>
         <div className='card-body'>
