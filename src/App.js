@@ -8,19 +8,31 @@ function App() {
   const [questionNumber, setQuestionNumber] = useState(0)
   const [showResults, setShowResults] = useState(false)
   const [questions, setQuestions] = useState([])
+  // const [isLoading, setIsLoading] = useState(false)
+  // const [isError, setIsError] = useState(false)
 
   const fetchQuestions = async () => {
-    const response = await fetch('https://opentdb.com/api.php?amount=10&category=23&difficulty=easy&type=multiple')
-
-    const data = await response.json()
-
-    const questionWrapper = [data.results]
-
-    setQuestions(questionWrapper)
+    try {
+      const response = await fetch('https://opentdb.com/api.php?amount=10&category=23&difficulty=easy&type=multiple')
+      
+      const data = await response.json()
+      
+      return setQuestions([...data.results])
+    } catch (error) {
+      // setIsError(true)
+      console.log(error)
+    }
   }
 
   useEffect(() => {
-    fetchQuestions();
+    // setIsLoading(true)
+
+    setTimeout(() => {
+      fetchQuestions();
+      console.log('questions', questions)
+    }, 3000)
+
+    // setIsLoading(false)
   }, [])
 
   const restartGame = () => {
@@ -55,6 +67,8 @@ function App() {
       <div className='card'>
         <div className='card-body'>
           <>
+            {/* {isLoading && <p>Loading...</p>}
+            {isError && <p>Something went wrong...</p>} */}
             {
               showResults ? (
                 <div className='card-body results'>
