@@ -1,6 +1,5 @@
 import { useState, useEffect, useReducer } from 'react'
 import Answers from './Answers.js'
-// import Questions from './Questions.js'
 import QuestionReducer from './Reducers.js'
 import './App.css';
 
@@ -59,7 +58,8 @@ function App() {
   
   const stringFormatter = (str) => {
     let string = str.replace(/&quot;/g, '\"')
-    string.replace(/&#039;/g, '\"')
+    string = string.replace(/&#039;/g, '\'')
+    string = string.replace(/&amp;/g, '&')
   
     return string
   }
