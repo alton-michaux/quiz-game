@@ -56,10 +56,12 @@ function App() {
       setShowResults(false)
     }, 3000)
   }
-
+  
   const stringFormatter = (str) => {
-    str.replace(/(&quot;)/g, '\"')
-    return str
+    let string = str.replace(/&quot;/g, '\"')
+    string.replace(/&#039;/g, '\"')
+  
+    return string
   }
 
   const handleAnswerClick = (isCorrect) => {
