@@ -2,35 +2,58 @@
   text-align: center;
   display: flex;
   flex-direction: column;
+  background-image: url('https://wallpaperaccess.com/full/3570700.jpg');
+  background-attachment: fixed;
+  background-position: center;
+  background-size: 100vw 100vh;
+  min-height: 100vh;
+}
+
+.header {
+  color: white;
+}
+
+.score {
+  color: white;
+  padding-bottom: 1%;
 }
 
 .card {
   width: 80%;
   margin: 0 auto;
-  padding: 16px;
+  padding: 8px;
   border-radius: 16px;
   bottom: 15px;
+  opacity: 80%;
 }
 
 .card-body {
-  border: 3px solid darkgray;
   background-color: burlywood;
 }
 
 .card-title {
   background-color: blanchedalmond;
-  padding: 16px;
+  padding: 8px;
   border-radius: 16px;
   border: 3px solid black;
   font-size: 24px;
 }
 
-.answers {
+.card-text {
+  padding: 40px;
+}
+
+.answer {
   border: 1px solid white;
   margin-top: 1%;
-  padding: 16px;
+  padding: 10px;
   border-radius: 16px;
   background-color: blanchedalmond;
+}
+
+.answer:hover {
+  border: 2px solid black;
+  cursor: pointer;
 }
 
 ul {
