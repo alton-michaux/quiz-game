@@ -57,6 +57,11 @@ function App() {
     }, 3000)
   }
 
+  const stringFormatter = (str) => {
+    str.replace(/(&quot;)/g, '\"')
+    return str
+  }
+
   const handleAnswerClick = (isCorrect) => {
     if (isCorrect) {
       setScore(score + 1)
@@ -88,16 +93,16 @@ function App() {
               ) : (
                 <div className='card-body'>
                   <h3 className='question'>Question {questionNumber + 1} out of {questions.data.length}</h3>
-                  <h5 className='card-title card-text'>{questions.data[questionNumber].question.replace(/&quot;/g, '\\"')}</h5>
+                  <h5 className='card-title card-text'>{stringFormatter(questions.data[questionNumber].question)}</h5>
                   <ul>
                     {
                       answers.map((option, index) => {
                         return (
                           <Answers
                             key={index}
-                            answer={option}
+                            answer={stringFormatter(option)}
                             onSubmit={handleAnswerClick}
-                            correct={questions.data[questionNumber].correct_answer}
+                            correct={stringFormatter(questions.data[questionNumber].correct_answer)}
                           ></Answers>
                         )
                       })
