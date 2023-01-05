@@ -4,6 +4,7 @@ import QuestionReducer from './Reducers.js'
 import './App.css';
 
 function App() {
+  // set state variables
   const [score, setScore] = useState(0)
   const [questionNumber, setQuestionNumber] = useState(0)
   const [showResults, setShowResults] = useState(false)
@@ -11,10 +12,10 @@ function App() {
   const [questions, dispatchQuestions] = useReducer(QuestionReducer,
     { data: [], isError: false, isLoading: false })
 
+  // fetch api response
   const fetchQuestions = async () => {
+    dispatchQuestions({ type: 'QUESTION_FETCH_INIT' })
     try {
-      dispatchQuestions({ type: 'QUESTION_FETCH_INIT' })
-
       const response = await fetch('https://opentdb.com/api.php?amount=15&category=11')
 
       const data = await response.json()
@@ -31,27 +32,28 @@ function App() {
     }, 3000)
   }, [])
 
+  // take all answers (including the correct answer), throw them in an array,shuffle and set the state variable
   useEffect(() => {
-    console.log(questions)
     if (questions.data.length === 0) {
       return
     }
 
     const allAnswers = questions.data[questionNumber].incorrect_answers
-    
+
     if (allAnswers.length < 4) {
       allAnswers.push(questions.data[questionNumber].correct_answer)
     }
-    
+
     if (allAnswers.length > 4) {
       allAnswers.slice(0, 4)
     }
-    
+
     const shuffledArray = allAnswers.sort((a, b) => 0.5 - Math.random());
-    
+
     setAnswers(shuffledArray)
   }, [questionNumber, questions.data])
 
+  // restart handler
   const restartGame = () => {
     setTimeout(() => {
       fetchQuestions();
@@ -61,6 +63,7 @@ function App() {
     }, 3000)
   }
 
+  // check the selected li content against the correct answer and adjust accordingly
   const handleAnswerClick = (isCorrect) => {
     if (isCorrect) {
       setScore(score + 1)
