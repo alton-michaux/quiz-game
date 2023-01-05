@@ -32,6 +32,11 @@ function App() {
   }, [])
 
   useEffect(() => {
+    console.log(questions)
+    if (questions.data.length === 0) {
+      return
+    }
+
     const allAnswers = questions.data[questionNumber].incorrect_answers
     
     if (allAnswers.length < 4) {
@@ -85,14 +90,18 @@ function App() {
                   <h3 className='question'>You got {score} out of {questions.data.length} answers correct</h3>
                 </div>
               ) : (
-                <div className='card-body'>
-                  <QuestionBox
-                    questions={questions}
-                    questionNumber={questionNumber}
-                    answers={answers}
-                    handleAnswerClick={handleAnswerClick}
-                  ></QuestionBox>
-                </div>
+                questions.data.length > 0 ? (
+                  <div className='card-body'>
+                    <QuestionBox
+                      questions={questions}
+                      questionNumber={questionNumber}
+                      answers={answers}
+                      handleAnswerClick={handleAnswerClick}
+                    ></QuestionBox>
+                  </div>
+                ) : (
+                  <p className='text-warning'>Loading...</p>
+                )
               )
             }
             <button
