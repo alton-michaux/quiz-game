@@ -1,5 +1,5 @@
 import { useState, useEffect, useReducer } from 'react'
-import Answers from './Answers.js'
+import QuestionBox from './QuestionBox'
 import QuestionReducer from './Reducers.js'
 import './App.css';
 
@@ -94,22 +94,12 @@ function App() {
                 </div>
               ) : (
                 <div className='card-body'>
-                  <h3 className='question'>Question {questionNumber + 1} out of {questions.data.length}</h3>
-                  <h5 className='card-title card-text'>{stringFormatter(questions.data[questionNumber].question)}</h5>
-                  <ul>
-                    {
-                      answers.map((option, index) => {
-                        return (
-                          <Answers
-                            key={index}
-                            answer={stringFormatter(option)}
-                            onSubmit={handleAnswerClick}
-                            correct={stringFormatter(questions.data[questionNumber].correct_answer)}
-                          ></Answers>
-                        )
-                      })
-                    }
-                  </ul>
+                  <QuestionBox
+                    questions={questions}
+                    questionNumber={questionNumber}
+                    answers={answers}
+                    handleAnswerClick={handleAnswerClick}
+                  ></QuestionBox>
                 </div>
               )
             }
