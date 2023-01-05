@@ -55,14 +55,6 @@ function App() {
       setShowResults(false)
     }, 3000)
   }
-  
-  const stringFormatter = (str) => {
-    let string = str.replace(/&quot;/g, '\"')
-    string = string.replace(/&#039;/g, '\'')
-    string = string.replace(/&amp;/g, '&')
-  
-    return string
-  }
 
   const handleAnswerClick = (isCorrect) => {
     if (isCorrect) {
