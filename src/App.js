@@ -2,6 +2,7 @@ import { useState, useEffect, useReducer } from 'react'
 import axios from 'axios'
 import QuestionBox from './QuestionBox'
 import QuestionReducer from './Reducers.js'
+import Button from './Button.js'
 import './App.css';
 
 function App() {
@@ -33,7 +34,7 @@ function App() {
 
   // take all answers (including the correct answer), throw them in an array,shuffle and set the state variable
   useEffect(() => {
-    if (questions.data.length === 0) {
+    if (questionNumber === questions.data.length) {
       return
     }
 
@@ -52,6 +53,24 @@ function App() {
     setAnswers(shuffledArray)
   }, [questionNumber, questions.data])
 
+  const handleAnswerClick = (isCorrect, current) => {
+    if (isCorrect) {
+      current.target.style.backgroundColor = "green"
+      current.target.style.color = "white"
+      setScore(score + 1)
+    } else {
+      current.target.style.backgroundColor = "red"
+      current.target.style.color = "white"
+    }
+    setTimeout(() => {
+      current.target.style.backgroundColor = "blanchedalmond"
+      current.target.style.color = "black"
+      setQuestionNumber(questionNumber + 1)
+    }, 2000)
+    if (questionNumber + 1 === questions.data.length) {
+      setShowResults(true)
+    }
+  }
   // restart handler
   const restartGame = () => {
     setTimeout(() => {
@@ -60,18 +79,6 @@ function App() {
       setScore(0)
       setShowResults(false)
     }, 3000)
-  }
-
-  // check the selected li content against the correct answer and adjust accordingly
-  const handleAnswerClick = (isCorrect) => {
-    if (isCorrect) {
-      setScore(score + 1)
-    }
-    if (questionNumber + 1 === questions.data.length) {
-      setShowResults(true)
-    } else {
-      setQuestionNumber(questionNumber + 1)
-    }
   }
 
   return (
@@ -109,13 +116,12 @@ function App() {
           }
         </>
       </div>
-      <button
-        className='btn btn-dark btn-lg reset'
+      <Button
         type='reset'
         value='reset'
         onClick={() => { restartGame() }}
       ><b>RESET</b>
-      </button>
+      </Button>
     </div>
   );
 }

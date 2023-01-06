@@ -64,7 +64,7 @@
 
 ul {
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
 }
 
 .answer {
@@ -73,7 +73,9 @@ ul {
   padding: 10px;
   border-radius: 16px;
   background-color: blanchedalmond;
-  min-width: 200px;
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 2%;
 }
 
 .answer:hover {
