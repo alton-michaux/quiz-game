@@ -11,6 +11,11 @@
   overflow: hidden;
 }
 
+.header-div {
+  padding: 6px;
+  margin-bottom: 20px;
+}
+
 .header {
   color: black;
   background-color: white;
@@ -68,6 +73,11 @@
 .answer:hover {
   border: 1px solid black;
   cursor: pointer;
+}
+
+.reset {
+  width: 50%;
+  margin: 0 auto;
 }
 
 ul {

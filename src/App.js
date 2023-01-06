@@ -77,44 +77,46 @@ function App() {
 
   return (
     <div className="App">
-      {/* Header */}
-      <h1 className='display-5 header'>Movie Trivia</h1>
-      {/* Current Score */}
-      <h5 className='score'>Current Score: {score}</h5>
+      <div className='header-div'>
+        {/* Header */}
+        <h1 className='display-5 header'>Movie Trivia</h1>
+        {/* Current Score */}
+        <h5 className='score'>Current Score: {score}</h5>
+      </div>
       {/* Question Card/Results */}
       <div className='card'>
-        <div className='card-body'>
-          <>
-            {questions.isLoading && <p>Loading...</p>}
-            {questions.isError && <p>Something went wrong...</p>}
-            {
-              showResults ? (
-                <div className='card-body results'>
-                  <h3 className='question'>You got {score} out of {questions.data.length} answers correct</h3>
+        <>
+          {questions.isLoading && <p>Loading...</p>}
+          {questions.isError && <p>Something went wrong...</p>}
+          {
+            showResults ? (
+              <div className='card-body results'>
+                <h3 className='question'>You got {score} out of {questions.data.length} answers correct</h3>
+              </div>
+            ) : (
+              questions.data.length > 0 ? (
+                <div className='card-body'>
+                  <QuestionBox
+                    questions={questions}
+                    questionNumber={questionNumber}
+                    answers={answers}
+                    handleAnswerClick={handleAnswerClick}
+                  ></QuestionBox>
                 </div>
               ) : (
-                questions.data.length > 0 ? (
-                  <div className='card-body'>
-                    <QuestionBox
-                      questions={questions}
-                      questionNumber={questionNumber}
-                      answers={answers}
-                      handleAnswerClick={handleAnswerClick}
-                    ></QuestionBox>
-                  </div>
-                ) : (
-                  <p className='text-warning'>Loading...</p>
-                )
+                <p className='text-warning'>Loading...</p>
               )
-            }
-            <button
-              type='button'
-              onClick={() => { restartGame() }}
-            >New Game
-            </button>
-          </>
-        </div>
+            )
+          }
+        </>
       </div>
+      <button
+        className='btn btn-dark btn-lg reset'
+        type='reset'
+        value='reset'
+        onClick={() => { restartGame() }}
+      ><b>RESET</b>
+      </button>
     </div>
   );
 }
