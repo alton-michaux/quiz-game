@@ -16,7 +16,7 @@ function App() {
   const fetchQuestions = async () => {
     dispatchQuestions({ type: 'QUESTION_FETCH_INIT' })
     try {
-      const response = await fetch('https://opentdb.com/api.php?amount=25&category=11')
+      const response = await fetch('https://opentdb.com/api.php?amount=10&category=11')
 
       const data = await response.json()
 
@@ -91,7 +91,7 @@ function App() {
           {
             showResults ? (
               <div className='card-body results'>
-                <h3 className='question'>You got {score} out of {questions.data.length} answers correct</h3>
+                <h3 className='question'>You got {score} out of {questions.data.length} answers correct ({(score / questions.data.length) * 100}%)</h3>
               </div>
             ) : (
               questions.data.length > 0 ? (
