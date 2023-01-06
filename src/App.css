@@ -62,12 +62,18 @@
   color: white;
 }
 
+ul {
+  display: flex;
+  justify-content: space-around;
+}
+
 .answer {
   border: 1px solid white;
   margin-top: 1%;
   padding: 10px;
   border-radius: 16px;
   background-color: blanchedalmond;
+  min-width: 200px;
 }
 
 .answer:hover {

@@ -1,4 +1,5 @@
 import { useState, useEffect, useReducer } from 'react'
+import axios from 'axios'
 import QuestionBox from './QuestionBox'
 import QuestionReducer from './Reducers.js'
 import './App.css';
@@ -16,11 +17,11 @@ function App() {
   const fetchQuestions = async () => {
     dispatchQuestions({ type: 'QUESTION_FETCH_INIT' })
     try {
-      const response = await fetch('https://opentdb.com/api.php?amount=10&category=11')
+      const response = await axios.get('https://opentdb.com/api.php?amount=10&category=11')
 
-      const data = await response.json()
-
-      return dispatchQuestions({ type: 'QUESTION_FETCH_SUCCESS', payload: [...data.results] })
+      // const data = await response.json()
+console.log('response',response)
+      return dispatchQuestions({ type: 'QUESTION_FETCH_SUCCESS', payload: [...response.data.results] })
     } catch (error) {
       return dispatchQuestions({ type: 'QUESTION_FETCH_FAIL' })
     }
@@ -86,8 +87,8 @@ function App() {
       {/* Question Card/Results */}
       <div className='card'>
         <>
-          {questions.isLoading && <p>Loading...</p>}
-          {questions.isError && <p>Something went wrong...</p>}
+          {questions.isLoading && <p className='text-warning'>Loading...</p>}
+          {questions.isError && <p className='text-danger'>Something went wrong...</p>}
           {
             showResults ? (
               <div className='card-body results'>
