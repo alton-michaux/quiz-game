@@ -19,8 +19,6 @@ function App() {
     try {
       const response = await axios.get('https://opentdb.com/api.php?amount=10&category=11')
 
-      // const data = await response.json()
-console.log('response',response)
       return dispatchQuestions({ type: 'QUESTION_FETCH_SUCCESS', payload: [...response.data.results] })
     } catch (error) {
       return dispatchQuestions({ type: 'QUESTION_FETCH_FAIL' })
