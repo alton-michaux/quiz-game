@@ -66,10 +66,10 @@ function App() {
       current.target.style.backgroundColor = "blanchedalmond"
       current.target.style.color = "black"
       setQuestionNumber(questionNumber + 1)
-    }, 2000)
-    if (questionNumber + 1 === questions.data.length) {
-      setShowResults(true)
-    }
+      if (questionNumber + 1 === questions.data.length) {
+        setShowResults(true)
+      }
+    }, 1000)
   }
   // restart handler
   const restartGame = () => {
