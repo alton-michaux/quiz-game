@@ -5,6 +5,9 @@ const QuestionBox = ({ questions, questionNumber, answers, handleAnswerClick }) 
     let string = str.replace(/&quot;/g, '"')
     string = string.replace(/&#039;/g, '\'')
     string = string.replace(/&amp;/g, '&')
+	string = string.replace(/&ldquo;/g, '"')
+	string = string.replace(/&rdquo;/g, '"\'"')
+	string = string.replace(/&hellip;/g, '...')
   
     return string
   }
