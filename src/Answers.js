@@ -1,9 +1,13 @@
+import { useRef } from 'react'
+
 const Answers = function ({ id, answer, correct, onSubmit }) {
-	const handleAnswerSubmissions = () => {
+	const inputRef = useRef(null)
+
+	const handleAnswerSubmissions = (inputRef) => {
 		if (answer === correct) {
-			onSubmit(true)
+			onSubmit(true, inputRef)
 		} else {
-			onSubmit(false)
+			onSubmit(false, inputRef)
 		}
 	}
 	return (
